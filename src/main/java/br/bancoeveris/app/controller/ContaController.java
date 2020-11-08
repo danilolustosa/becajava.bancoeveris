@@ -5,21 +5,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.bancoeveris.app.service.OperacaoService;
+import br.bancoeveris.app.service.ContaService;
 
 @RestController
-@RequestMapping("/operacao")
-public class OperacaoController {
+@RequestMapping("/conta")
+public class ContaController {
 	
-	final OperacaoService _service;
+	final ContaService _service;
 	
-	public OperacaoController(OperacaoService service) {
+	public ContaController(ContaService service) {
 		_service = service;
 	}
 	
-	
-	
-	
-	
+	@GetMapping(path = "/{hash}")
+	public double Saldo(@PathVariable String hash) {
+		return _service.Saldo(hash);
+	}
 
 }
