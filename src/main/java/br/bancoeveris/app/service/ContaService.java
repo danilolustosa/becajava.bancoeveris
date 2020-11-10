@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import br.bancoeveris.app.model.Conta;
 import br.bancoeveris.app.repository.ContaRepository;
+import br.bancoeveris.app.response.ContaResponse;
 
 @Service
 public class ContaService {
@@ -18,14 +19,23 @@ public class ContaService {
 		_operacaoService = operacaoService;
 	}
 	
-	public double Saldo(String hash) {
+	public ContaResponse Saldo(String hash) {
+		ContaResponse response = new ContaResponse();
+		Conta conta = _repository.findByHash(hash);
 		
-		List<Conta> lista = _repository.findByHash(hash);
+		if (conta == null) {
+			response.statusCode = 404;
+			response.message = "Conta não encontrada.";
+			return response;					
+		}		
+
+		response.statusCode = 200;
+		response.message = "Conta encontrada.";
+		response.setHash(conta.getHash());
+		response.setId(conta.getId());
+		response.setSaldo(_operacaoService.Saldo(conta.getId()));
 		
-		if (lista.size() == 0)
-			return 0;
-		else
-			return _operacaoService.Saldo(lista.get(0).getId());		
+		return response;		
 	}
 
 }
