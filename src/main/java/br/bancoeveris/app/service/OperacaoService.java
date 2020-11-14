@@ -25,32 +25,32 @@ public class OperacaoService {
 		Operacao operacao = new Operacao();
 		
 		if (request.getHash() == "") {
-			response.statusCode = 400;
-			response.message = "Conta para depósito não preenchida.";
+			response.setStatusCode(400);
+			response.setMessage("Conta para depósito não preenchida");
 			return response;
 		}
 		
 		if (request.getValor() <= 0) {
-			response.statusCode = 400;
-			response.message = "Valor para depósito inválido.";
+			response.setStatusCode(400);
+			response.setMessage("Valor para depósito inválido.");
 			return response;
 		}
 		
 		Conta conta = _contaRepository.findByHash(request.getHash());
 		
 		if (conta == null) {
-			response.statusCode = 400;
-			response.message = "Conta inexistente.";
+			response.setStatusCode(400);
+			response.setMessage("Conta inexistente.");
 			return response;
 		}		
 		
 		operacao.setTipo("D");
 		operacao.setValor(request.getValor());
 		operacao.setContaDestino(conta);
-		this.inserir(operacao);
+		_repository.save(operacao);
 		
-		response.statusCode = 201;
-		response.message = "Depósito realizado com sucesso.";		
+		response.setStatusCode(201);
+		response.setMessage("Depósito realizado com sucesso.");
 		return response;		
 	}
 	
@@ -59,32 +59,32 @@ public class OperacaoService {
 		Operacao operacao = new Operacao();
 		
 		if (request.getHash() == "") {
-			response.statusCode = 400;
-			response.message = "Conta para saque não preenchida.";
+			response.setStatusCode(400);
+			response.setMessage("Conta para saque não preenchida.");
 			return response;
 		}
 		
 		if (request.getValor() <= 0) {
-			response.statusCode = 400;
-			response.message = "Valor para saque inválido.";
+			response.setStatusCode(400);
+			response.setMessage("Valor para saque inválido.");
 			return response;
 		}
 		
 		Conta conta = _contaRepository.findByHash(request.getHash());
 		
 		if (conta == null) {
-			response.statusCode = 400;
-			response.message = "Conta inexistente.";
+			response.setStatusCode(400);
+			response.setMessage("Conta inexistente.");
 			return response;
 		}		
 		
 		operacao.setTipo("S");
 		operacao.setValor(request.getValor());
 		operacao.setContaOrigem(conta);
-		this.inserir(operacao);
+		_repository.save(operacao);
 		
-		response.statusCode = 201;
-		response.message = "Saque realizado com sucesso.";		
+		response.setStatusCode(201);
+		response.setMessage("Saque realizado com sucesso.");
 		return response;		
 	}
 	
@@ -93,36 +93,36 @@ public class OperacaoService {
 		Operacao operacao = new Operacao();
 		
 		if (request.getHashOrigem() == "") {
-			response.statusCode = 400;
-			response.message = "Conta origem não preenchida.";
+			response.setStatusCode(400);
+			response.setMessage("Conta origem não preenchida.");
 			return response;
 		}
 		
 		if (request.getHashDestino() == "") {
-			response.statusCode = 400;
-			response.message = "Conta destino não preenchida.";
+			response.setStatusCode(400);
+			response.setMessage("Conta destino não preenchida.");
 			return response;
 		}
 		
 		if (request.getValor() <= 0) {
-			response.statusCode = 400;
-			response.message = "Valor para saque inválido.";
+			response.setStatusCode(400);
+			response.setMessage("Valor para saque inválido.");
 			return response;
 		}
 		
 		Conta contaOrigem = _contaRepository.findByHash(request.getHashOrigem());
 		
 		if (contaOrigem == null) {
-			response.statusCode = 400;
-			response.message = "Conta origem inexistente.";
+			response.setStatusCode(400);
+			response.setMessage("Conta origem inexistente.");
 			return response;
 		}		
 		
 		Conta contaDestino = _contaRepository.findByHash(request.getHashDestino());
 		
 		if (contaDestino == null) {
-			response.statusCode = 400;
-			response.message = "Conta destino inexistente.";
+			response.setStatusCode(400);
+			response.setMessage("Conta destino inexistente.");
 			return response;
 		}		
 		
@@ -130,15 +130,11 @@ public class OperacaoService {
 		operacao.setValor(request.getValor());
 		operacao.setContaOrigem(contaOrigem);
 		operacao.setContaDestino(contaDestino);
-		this.inserir(operacao);
-		
-		response.statusCode = 201;
-		response.message = "Transferência realizada com sucesso.";
-		return response;		
-	}
-	
-	public void inserir(Operacao operacao) {
 		_repository.save(operacao);
+		
+		response.setStatusCode(201);
+		response.setMessage("Transferência realizada com sucesso.");
+		return response;		
 	}
 	
 	public double Saldo(Long contaId) {

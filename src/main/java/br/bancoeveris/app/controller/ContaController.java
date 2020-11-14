@@ -23,7 +23,7 @@ public class ContaController {
 	public ResponseEntity Saldo(@PathVariable String hash) {
 		try {
 			ContaResponse response = _service.Saldo(hash);
-			return ResponseEntity.status(response.statusCode).body(response);
+			return ResponseEntity.status(response.getStatusCode()).body(response);
 		} catch (Exception e) {
 			return ResponseEntity.status(500).body("Erro genérico");
 		}		

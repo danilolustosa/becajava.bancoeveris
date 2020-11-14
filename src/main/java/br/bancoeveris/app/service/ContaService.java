@@ -24,13 +24,13 @@ public class ContaService {
 		Conta conta = _repository.findByHash(hash);
 		
 		if (conta == null) {
-			response.statusCode = 404;
-			response.message = "Conta não encontrada.";
+			response.setStatusCode(404);
+			response.setMessage("Conta não encontrada.");
 			return response;					
 		}		
 
-		response.statusCode = 200;
-		response.message = "Conta encontrada.";
+		response.setStatusCode(200);
+		response.setMessage("Conta encontrada");
 		response.setHash(conta.getHash());
 		response.setId(conta.getId());
 		response.setSaldo(_operacaoService.Saldo(conta.getId()));

@@ -24,7 +24,7 @@ public class OperacaoController {
 	public ResponseEntity deposito(@RequestBody DepositoRequest request) {
 		try {
 			BaseResponse response = _service.inserirDeposito(request);
-			return ResponseEntity.status(response.statusCode).body(response);
+			return ResponseEntity.status(response.getStatusCode()).body(response);
 		} catch (Exception e) {
 			return ResponseEntity.status(500).body("Erro genérico");
 		}		
@@ -34,7 +34,7 @@ public class OperacaoController {
 	public ResponseEntity saque(@RequestBody SaqueRequest request) {
 		try {
 			BaseResponse response = _service.inserirSaque(request);
-			return ResponseEntity.status(response.statusCode).body(response);
+			return ResponseEntity.status(response.getStatusCode()).body(response);
 		} catch (Exception e) {
 			return ResponseEntity.status(500).body("Erro genérico");
 		}		
@@ -44,7 +44,7 @@ public class OperacaoController {
 	public ResponseEntity transferencia(@RequestBody TransferenciaRequest request) {
 		try {
 			BaseResponse response = _service.inserirTransferencia(request);
-			return ResponseEntity.status(response.statusCode).body(response);
+			return ResponseEntity.status(response.getStatusCode()).body(response);
 		} catch (Exception e) {
 			return ResponseEntity.status(500).body("Erro genérico");
 		}		
